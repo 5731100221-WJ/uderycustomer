@@ -1,3 +1,35 @@
 {
-  "presets": ["react-native"]
+  "presets": [
+    "react-native"
+  ],
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./src"],
+      "alias": {
+        "underscore": "lodash"
+      }
+    }]
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        ["module-resolver", {
+          "root": ["./src"],
+          "alias": {
+            "underscore": "lodash"
+          }
+        }]
+      ]
+    },
+    "production": {
+      "plugins": [
+        ["module-resolver", {
+          "root": ["./src"],
+          "alias": {
+            "underscore": "lodash"
+          }
+        }]
+      ]
+    }
+  }
 }
