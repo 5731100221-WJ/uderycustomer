@@ -5,19 +5,29 @@
  */
 
 import React, { Component } from 'react';
+import { Router, Scene } from 'react-native-router-flux';
 import {
   Platform,
   StyleSheet
 } from 'react-native';
 import StoreList from './src/screen/authorize/storeList/StoreList';
-import Profile from './src/screen/authorize/profile/Profile'
+import Profile from './src/screen/authorize/profile/Profile';
+import Favorite from './src/screen/authorize/favorite/Favorite';
+import OrderList from './src/screen/authorize/orderList/OrderList';
 
 type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      // <StoreList />
-      <Profile />
+      <Router >
+        <Scene hideNavBar={true} key="root">
+          <Scene key="orderList" component={OrderList} title="OrderList" />
+          <Scene key="storeList" component={StoreList} title="StoreList" />
+          <Scene key="profile" component={Profile} title="Profile" />
+          <Scene key="favorite" component={Favorite} title="Favorite" />
+
+        </Scene>
+      </Router>
     );
   }
 }
