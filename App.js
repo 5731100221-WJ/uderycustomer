@@ -21,8 +21,8 @@ export default class App extends Component<Props> {
     return (
       <Router >
         <Scene hideNavBar={true} key="root">
-          <Scene key="orderList" component={OrderList} title="OrderList" />
           <Scene key="storeList" component={StoreList} title="StoreList" />
+          <Scene key="orderList" component={OrderList} title="OrderList" />
           <Scene key="profile" component={Profile} title="Profile" />
           <Scene key="favorite" component={Favorite} title="Favorite" />
 
