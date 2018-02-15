@@ -7,15 +7,15 @@ export default class FooterTabs extends Component {
       <Footer>
         <FooterTab>
           <Button vertical>
-            <Icon name="heart" onPress={() => { Actions.favorite(); }}/>
+            <Icon name="heart" onPress={() => { Actions.favorite(); }} />
             <Text>Favorite</Text>
           </Button>
           <Button vertical>
-            <Icon name="shop" onPress={() => { Actions.storeList(); }}/>
+            <Icon name="shop" onPress={() => { Actions.storeList(); }} />
             <Text>Store</Text>
           </Button>
           <Button vertical active>
-            <Icon active name="food" onPress={() => { Actions.orderList(); }}/>
+            <Icon active name="food" onPress={() => { Actions.orderList(); }} />
             <Text>Order</Text>
           </Button>
           <Button vertical onPress={() => { Actions.profile(); }}>

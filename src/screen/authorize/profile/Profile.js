@@ -8,7 +8,7 @@ export default class Profile extends Component {
   render() {
     return (
       <Container>
-        <Header backgroundColor='#FFF' >
+        <Header >
           <Left>
             <Button transparent onPress={() => this.props.navigation.goBack()}>
               <Icon name='arrow-back' />

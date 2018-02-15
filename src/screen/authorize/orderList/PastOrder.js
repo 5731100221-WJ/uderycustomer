@@ -36,9 +36,14 @@ export default class PastOrder extends Component {
                       <View style={{ margin: 15 }}>
                         <Text style={{ fontSize: 15 }}>{item.Topping[0]}</Text>
                       </View>
-                      <View style={{ margin: 15 }}>
-                        <Button  onPress={() => this.props.navigation.goBack()}>
+                      <View style={{ margin: 8 }}>
+                        <Button transparent >
                           <Text>Rate</Text>
+                        </Button>
+                      </View>
+                      <View style={{margin:10, height: 20}}>
+                        <Button style={{backgroundColor: 'green'}} >
+                          <Text>Re-order</Text>
                         </Button>
                       </View>
                     </View>
