@@ -4,6 +4,6 @@ import { Button } from 'native-base';
 
 export const BlockButton = (props) => {
     return (
-        <Button block ><Text>{props.text}</Text></Button>
+        <Button block ><Text>{props.Buttontext}</Text></Button>
     );
 };

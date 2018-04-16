@@ -40,7 +40,7 @@ export default class Favorite extends React.Component {
                         <Text style={{ fontSize: 25 }}>{item.name}</Text>
                       </View>
                       <Button vertical active transparent style={{ margin: 15 }} >
-                        <Icon active name="start" onPress={() => { Actions.storeList(); }} />
+                        <Icon active name='star' onPress={() => { Actions.storeList(); }} />
                       </Button>
                     </View>
                     <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -48,7 +48,7 @@ export default class Favorite extends React.Component {
                         <Text style={{ fontSize: 17 }}>{item.rate}</Text>
                       </View>
                       <View style={{ flex: 1, width: 5, marginTop: 18, marginLeft: 3 }} >
-                        <Icon active name="start" style={{ fontSize: 15 }} />
+                        <Icon active name="star" style={{ fontSize: 15 }} />
                       </View>
                       <View style={{ flex: 3, marginLeft: 10, marginTop: 15}}>
                         <Text style={{ fontSize: 15 }}>สั่งไปแล้ว {item.DoneOrder} Order</Text>

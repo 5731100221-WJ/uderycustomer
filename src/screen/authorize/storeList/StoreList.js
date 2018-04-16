@@ -1,7 +1,10 @@
 import React from 'react';
-import { Text, View, Image, ScrollView } from 'react-native';
+import { View, Image, ScrollView, TouchableHighlight } from 'react-native';
 import { Container, Picker, Icon, Input, Item, Header } from 'native-base';
 import FooterTabs from '@footerTabs/FooterTabs.js';
+import Text from '@atom/Text';
+import { Actions } from 'react-native-router-flux';
+
 const PickerItem = Picker.Item;
 
 export default class StoreList extends React.Component {
@@ -14,6 +17,7 @@ export default class StoreList extends React.Component {
     };
   }
   render() {
+    const {textList} = styles;
     return (
       <Container>
         <View style={{ width: 180, marginLeft: 30 }}>
@@ -40,18 +44,20 @@ export default class StoreList extends React.Component {
           <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between'}}>
             {this.state.list.map((item, index) => (
                 <View style={{ width: 170, height: 170, margin: 15}} key={index}>
-                  <View style={{ height: 150 }}>
-                    <Image
-                      style={{ width: 170, height: 145 }}
-                      source={require('@img/1.jpg')}
-                    />
+                  <View style={{ height: 150 }} >
+                    <TouchableHighlight onPress={() => Actions.store({id:item.id})}>
+                      <Image
+                        style={{ width: 170, height: 145 }}
+                        source={require('@img/1.jpg')}
+                      />
+                    </TouchableHighlight>
                   </View>
                   <View style={{ flex: 1, flexDirection: 'row', width: 170, height: 20, justifyContent: 'space-between' }}>
                     <View style={{ marginLeft: 5 }}>
-                      <Text>{item.name}</Text>
+                      <Text style={textList}>{item.name}</Text>
                     </View>
                     <View style={{ height: 20 }}>
-                      <Text>{item.rate}</Text>
+                      <Text style={textList}>{item.rate}</Text>
                     </View>
                   </View>
                 </View>
@@ -63,3 +69,9 @@ export default class StoreList extends React.Component {
     );
   }
 }
+
+const styles = {
+  textList: {
+    fontSize: 15
+  }
+};

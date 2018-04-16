@@ -79,7 +79,8 @@ const styles = StyleSheet.create({
   },
   body_text: {
     fontSize: 15,
-    color: 'black'
+    color: 'black',
+    marginTop: 10
   },
 
 });

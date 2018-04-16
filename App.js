@@ -14,7 +14,10 @@ import StoreList from './src/screen/authorize/storeList/StoreList';
 import Profile from './src/screen/authorize/profile/Profile';
 import Favorite from './src/screen/authorize/favorite/Favorite';
 import OrderList from './src/screen/authorize/orderList/OrderList';
+import Store from './src/screen/authorize/storeList/store/Store';
+import MenuDetails from './src/screen/authorize/storeList/store/MenuDetails';
 
+console.disableYellowBox = true;
 type Props = {};
 export default class App extends Component<Props> {
   render() {
@@ -23,6 +26,8 @@ export default class App extends Component<Props> {
         <Scene hideNavBar={true} key="root">
           <Scene key="storeList" component={StoreList} title="StoreList" />
           <Scene key="orderList" component={OrderList} title="OrderList" />
+          <Scene key="store" component={Store} title="Store" />
+          <Scene key="menuDetails" component={MenuDetails} title="MenuDetails" />
           <Scene key="profile" component={Profile} title="Profile" />
           <Scene key="favorite" component={Favorite} title="Favorite" />
 
