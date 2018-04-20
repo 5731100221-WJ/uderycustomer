@@ -13,42 +13,44 @@ export default class Store extends React.Component {
       userId: props.userID || 1,
       IsFavorite: false,
       isOpen: false,
-      store: { storeName: 'ไก่ทอด', storeDetail: 'ไก่ทอดอักษร', timeOpen: '06:00', timeClose: '17:00', rate: 4.9 },
+      store: {},
+      // store: { storeName: 'ไก่ทอด', storeDetail: 'ไก่ทอดอักษร', timeOpen: '06:00', timeClose: '17:00', rate: 4.9 },
       user: {},
       storeMenu: [
-      { menuID: 1, name: 'ข้าวคัสสึด้งหมู', price: '35' },
-      { menuID: 2, name: 'ข้าวแกงกระหรี่', price: '35' },
-      { menuID: 3, name: 'ข้าวหน้าหมูญี่ปุ่น', price: '35' },
-      { menuID: 4, name: 'ข้าวไข่เจียว', price: '35' },
-      { menuID: 5, name: 'ข้าวเทริยากิ', price: '35' },
-      { menuID: 6, name: 'ข้าวเทริยากิ', price: '35' },
-      { menuID: 7, name: 'ข้าวเทริยากิ', price: '35' },
-      { menuID: 8, name: 'ข้าวเทริยากิ', price: '35' },
-    ]
+      // { menuID: 1, name: 'ข้าวคัสสึด้งหมู', price: '35' },
+      // { menuID: 2, name: 'ข้าวแกงกระหรี่', price: '35' },
+      // { menuID: 3, name: 'ข้าวหน้าหมูญี่ปุ่น', price: '35' },
+      // { menuID: 4, name: 'ข้าวไข่เจียว', price: '35' },
+      // { menuID: 5, name: 'ข้าวเทริยากิ', price: '35' },
+      // { menuID: 6, name: 'ข้าวเทริยากิ', price: '35' },
+      // { menuID: 7, name: 'ข้าวเทริยากิ', price: '35' },
+      // { menuID: 8, name: 'ข้าวเทริยากิ', price: '35' },
+    ],
     };
 }
 
   componentDidMount() {
-    this.isThisOpenNow();
-    this.getStoreDetails();
+    // this.isThisOpenNow();
+    this.getStoreDetail();
+    this.getStoreMenu();
   }
 
-  getStoreDetails() {
-    fetch('http://10.202.199.150:3000/stores/' + this.state.id)
+  getStoreDetail() {
+    fetch('http://35.185.182.152:3000/api/stores/'+ this.state.id)
       .then((response) => response.json())
       .then((response) => {
         console.log('test', response)
         this.setState({ store: response });
       })
       .catch(() => {
-        this.setState({ store: { storeName: 'ไก่ทอด', storeDetail: 'ไก่ทอดอักษร', timeOpen: '06:00', timeClose: '17:00', rate: 4.9 } });
+        this.setState({ store: { name: 'ส้มaa', description: 'จานด่วน', picture:'https://food.mthai.com/app/uploads/2014/03/792167141-1.jpg', id: '5ac7c683322d2c02cf0f3587' } });
       })
   }
   getStoreMenu() {
-    fetch('http://10.202.199.150:3000/stores_menu/' + this.state.id)
+    fetch('http://35.185.182.152:3000/api/stores/'+ this.state.id+'/menuitems' )
       .then((response) => response.json())
       .then((response) => {
-        console.log('test', response)
+        console.log(this.state.id, response)
         this.setState({ storeMenu: response });
       })
       .catch(() => {
@@ -66,7 +68,7 @@ export default class Store extends React.Component {
       })
   }
   getUserDetails(){
-    fetch('http://10.202.199.150:300/user' +this.state.userId)
+    fetch('http://10.202.199.150:300/user' + this.state.userId)
       .then((response) => response.json())
       .then((response) => {
         this.setState({ user: response });
@@ -76,16 +78,16 @@ export default class Store extends React.Component {
       })
   }
 
-  isThisOpenNow() {
-    fetch('http://10.202.199.150:3000/stores/' + this.state.id + '/isOpen')
-      .then((response) => response.json())
-      .then((response) => {
-        console.log('test', response)
-        this.setState({ isOpen: response });
-      }).catch(() => {
-        this.setState({ isOpen: false });
-      })
-  }
+  // isThisOpenNow() {
+  //   fetch('http://10.202.199.150:3000/stores/' + this.state.id + '/isOpen')
+  //     .then((response) => response.json())
+  //     .then((response) => {
+  //       console.log('test', response)
+  //       this.setState({ isOpen: response });
+  //     }).catch(() => {
+  //       this.setState({ isOpen: false });
+  //     })
+  // }
 
   render() {
     const { container, textName, textDetail, textTime, userImageView, menuBox, menuView, rateView} = styles;
@@ -93,18 +95,18 @@ export default class Store extends React.Component {
     return (
       <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start' }}>
         <ScrollView>
-          <ImageBackground style={{ height: 160, flexDirection: 'row' }} blurRadius={20} source= { require('@img/4.jpg') }>
+          <ImageBackground style={{ height: 160, flexDirection: 'row' }} blurRadius={20} source={{ uri: store.picture }}>
             <Button transparent onPress={() => this.props.navigation.goBack()}>
                 <Icon name="arrow-back" />
             </Button>
-            <View style={{ margin: 10 }}>
-              <Text style={textName}>{store.storeName}</Text>
-              <Text style={textDetail}>{store.storeDetail} </Text>
-              <Button block style={{ height: 20, width: 35, margin: 8, backgroundColor: (this.state.isOpen ? '#1EBE3E' : '#fff') }}>
+            <View style={{ margin: 20 }}>
+              <Text style={textName}>ร้าน{store.name}</Text>
+              <Text style={textDetail}>{store.description} </Text>
+              {/* <Button block style={{ height: 20, width: 35, margin: 8, backgroundColor: (this.state.isOpen ? '#1EBE3E' : '#fff') }}>
                 <Text>{ this.state.isOpen ? 'เปิด' : 'ปิด' }</Text>
               </Button>
               <Text style={textTime}>เวลาที่เปิดให้บริการ</Text>
-              <Text style={textTime}>{store.timeOpen}-{store.timeClose}</Text>
+              <Text style={textTime}>{store.timeOpen}-{store.timeClose}</Text> */}
             </View>
             <Icon name="star" style={{ marginTop: 15}} />
           </ImageBackground>
@@ -123,7 +125,7 @@ export default class Store extends React.Component {
           </View>
           <View style={menuView}>
             {this.state.storeMenu.map((menu, index) => (
-              <Button full light style={menuBox} key={index} onPress={() => { Actions.menuDetails({ id: this.state.id }); }}>
+              <Button full light style={menuBox} key={index} onPress={() => { Actions.menuDetails({ id: this.state.id ,menuID: menu.id ,menuName:menu.name}); }}>
                 <Text>{menu.name}</Text>
                 <Text>{menu.price}</Text>
               </Button>
@@ -144,11 +146,12 @@ const styles = {
   },
   textName: {
     fontSize: 30,
-    color: 'white'
+    color: 'black',
+    marginBottom: 15
   },
   textDetail: {
     fontSize: 15,
-    color: 'white'
+    color: 'black'
   },
   textTime: {
     fontSize: 12,

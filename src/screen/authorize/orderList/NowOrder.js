@@ -7,7 +7,7 @@ export default class NowOrder extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: [{ id: 0, foodName: 'คัสสึด้ง', Topping: ['หมู'], Price: '35', Date: '14/02/2018', Time: '12:00 น.' }]
+      list: [{ id: 0, foodName: 'คัสสึด้ง', Topping: ['หมู'], Price: '35', Date: '19/04/2018', Time: '05:12 PM.' }]
     };
   }
   render() {
@@ -19,7 +19,7 @@ export default class NowOrder extends Component {
                 <Card style={{ height: 150, margin: 20, flex: 1, flexDirection: 'row' }} key={index}>
                   <Image
                       style={{ width: 170, height: 150 }}
-                      source={ require('@img/1.jpg')}
+                      source={ {uri:'http://media.komchadluek.net/img/size1/2017/06/09/L_g9657ha7ddk5d5abab98g1.jpg'}}
                   />
                   <View style={{ flex: 1, flexDirection: 'column' }}>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>

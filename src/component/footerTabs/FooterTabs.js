@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text } from 'native-base';
+import { Container, Header, Content, Footer, FooterTab, Button, Text } from 'native-base';
+import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+
 import { Actions } from 'react-native-router-flux';
 export default class FooterTabs extends Component {
   render() {
@@ -7,19 +9,19 @@ export default class FooterTabs extends Component {
       <Footer>
         <FooterTab>
           <Button vertical onPress={() => { Actions.favorite(); }}>
-            <Icon name="heart"  />
+            <Icon name="heart" style={{fontSize:30}} />
             <Text>Favorite</Text>
           </Button>
           <Button vertical onPress={() => { Actions.storeList(); }}>
-            <Icon name="shop"  />
+            <Icon name="store" style={{fontSize:30}} />
             <Text>Store</Text>
           </Button>
           <Button vertical active onPress={() => { Actions.orderList(); }}>
-            <Icon active name="cook"  />
+            <Icon active name="silverware" style={{fontSize:30}} />
             <Text>Order</Text>
           </Button>
           <Button vertical onPress={() => { Actions.profile(); }}>
-            <Icon name="person" />
+            <Icon name="account" style={{fontSize:30}}/>
             <Text>Profile</Text>
           </Button>
         </FooterTab>

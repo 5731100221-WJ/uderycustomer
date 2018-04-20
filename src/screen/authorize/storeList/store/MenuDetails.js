@@ -3,27 +3,32 @@ import { ImageBackground, View, ScrollView } from 'react-native';
 import { Icon, Button } from 'native-base';
 import Text from '@atom/Text';
 import { Actions } from 'react-native-router-flux';
+import { findIndex } from 'lodash'
 
 export default class MenuDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       id: props.id,
+      menuID: props.menuID,
       userId: props.userID || 1,
       IsFavorite: false,
       isOpen: false,
       user: {},
-      toppingType: []
+      toppingPrice: 0,
+      toppingType: [],
+      menu: {},
+      selectedItems: []
     };
   }
 
   componentDidMount() {
     this.getStoreTopping();
+    this.getStoreMenu();
   }
 
   getStoreTopping() {
-    fetch('http://35.185.182.152:3000/api/stores/' + '5ac7c683322d2c02cf0f3587'+'/proteinitems')
-    // fetch('http://35.185.182.152:3000/api/stores/' + this.state.id+'/proteinitems')
+    fetch('http://35.185.182.152:3000/api/stores/' +this.state.id+'/proteinitems')
       .then((response) => response.json())
       .then((response) => {
         this.setState({ toppingType: response });
@@ -43,23 +48,83 @@ export default class MenuDetails extends React.Component {
       })
   }
 
+  getStoreMenu() {
+    fetch('http://35.185.182.152:3000/api/stores/'+ this.state.id+'/menuitems/'+this.state.menuID )
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(this.state.id, response)
+        this.setState({ menu: response });
+      })
+      .catch(() => {
+        this.setState({
+          menu: [
+          { menuID: 1, name: 'ข้าวคัสสึด้งหมู', price: '35' },
+          { menuID: 2, name: 'ข้าวแกงกระหรี่', price: '35' },
+          { menuID: 3, name: 'ข้าวหน้าหมูญี่ปุ่น', price: '35' },
+          { menuID: 4, name: 'ข้าวไข่เจียว', price: '35' },
+          { menuID: 5, name: 'ข้าวเทริยากิ', price: '35' },
+          { menuID: 6, name: 'หม', price: '35' },
+          { menuID: 7, name: 'ข้าหฟกวเทริยากิ', price: '35' },
+          { menuID: 8, name: 'ข้าวเไๆำๆทริยากิ', price: '35' },
+        ] });
+      })
+  }
+
+  isSelected(id) {
+    const { selectedItems } = this.state;
+    const index = selectedItems.indexOf(id);
+
+    return index > -1
+  }
+
+  toggleItem(id) {
+    const isSelected = this.isSelected(id);
+
+    if (isSelected) {
+      this.removeItem(id);
+    } else {
+      this.addItem(id);
+    }
+  }
+
+  addItem(id) {
+    const { selectedItems } = this.state;
+    selectedItems.push(id);
+    this.setState({ selectedItems });
+  }
+
+  removeItem(id) {
+    const { selectedItems } = this.state;
+    const index = selectedItems.indexOf(id);
+    selectedItems.splice(index, 1);
+    this.setState({ selectedItems });
+  }
+
+  sumItemPrice() {
+    let sum = 0;
+    const { toppingType } = this.state;
+    this.state.selectedItems.map((id, index) => {
+      const itemIndex = findIndex(toppingType, { id });
+      sum += toppingType[itemIndex].price;
+    });
+    return sum;
+  }
 
   render() {
-    console.log('test')
     const { toppingView, menuBox, menuNameView, headerTP, menuView } = styles;
-    const { store } = this.state;
+    const { store,menu } = this.state;
     return (
       <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start' }}>
         <ScrollView>
-          <ImageBackground style={{ height: 160, flexDirection: 'row' }} source= { require('@img/4.jpg') }>
+          <ImageBackground style={{ height: 160, flexDirection: 'row' }} source= {{ uri:menu.picture }}>
             <Button transparent onPress={() => this.props.navigation.goBack()}>
                 <Icon name="arrow-back" />
             </Button>
           </ImageBackground>
           <View style={menuNameView}>
             <Button full light style={menuBox} >
-              <Text>ข้าวคัสสึด้งหมู</Text>
-              <Text>35</Text>
+              <Text>{menu.name}</Text>
+              <Text>{menu.price}</Text>
             </Button>
           </View>
           <View style={toppingView}>
@@ -68,8 +133,11 @@ export default class MenuDetails extends React.Component {
             </View>
             <View style={menuView}>
               {(typeof this.state.toppingType === 'object' && this.state.toppingType.error) ? <Text>No item</Text>
-              : this.state.toppingType.map((topping, index) => (
-                <Button full light style={menuBox} key={index}>
+               : this.state.toppingType.map((topping, index) => (
+                <Button full style={menuBox} key={index}
+                  light
+                  info={this.isSelected(topping.id)}
+                  onPress={() => this.toggleItem(topping.id)}>
                   <Text>{topping.name}</Text>
                   <Text>+{topping.price}</Text>
                 </Button>
@@ -77,11 +145,11 @@ export default class MenuDetails extends React.Component {
             </View>
             <View style={[menuBox, { marginTop: 20}]}>
               <Text>ราคารวม</Text>
-              <Text>35บาท</Text>
+              <Text>{menu.price + this.sumItemPrice()}</Text>
             </View>
             <Button full style={{ backgroundColor: '#FEBC4A', marginBottom: 10 }}
-              onPress={() => { Actions.storeList(); }}>
-              <Text>ชำระเงิน</Text>
+              onPress={() => { Actions.orderList({}); }}>
+              <Text>สั่ง</Text>
             </Button>
           </View>
         </ScrollView>
