@@ -16,6 +16,8 @@ import Favorite from './src/screen/authorize/favorite/Favorite';
 import OrderList from './src/screen/authorize/orderList/OrderList';
 import Store from './src/screen/authorize/storeList/store/Store';
 import MenuDetails from './src/screen/authorize/storeList/store/MenuDetails';
+import Review from './src/screen/authorize/review/Review';
+import Login from './src/screen/authorize/login/Login';
 // import LoginScreen from './src/screen/unauthorize/screens/LoginScreen/index';
 
 console.disableYellowBox = true;
@@ -25,8 +27,10 @@ export default class App extends Component<Props> {
     return (
       <Router >
         <Scene hideNavBar={true} key="root">
+          <Scene key="login" component={Login} title="Login" />
           {/* <Scene key="loginScreen" component={LoginScreen} title="LoginScreen" /> */}
           <Scene key="storeList" component={StoreList} title="StoreList" />
+          <Scene key="review" component={Review} title="Review" />
           <Scene key="orderList" component={OrderList} title="OrderList" />
           <Scene key="store" component={Store} title="Store" />
           <Scene key="menuDetails" component={MenuDetails} title="MenuDetails" />

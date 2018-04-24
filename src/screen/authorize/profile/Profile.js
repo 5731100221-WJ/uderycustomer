@@ -26,7 +26,7 @@ export default class Profile extends Component {
         <View style={styles.userImageView}>
           <Image
             style={styles.userImage}
-            source={ require('@img/profilePic.jpg')}
+            source={{uri:'https://scontent.fbkk2-6.fna.fbcdn.net/v/t1.0-9/29541815_2017223515215013_2350939371380057927_n.jpg?_nc_cat=0&_nc_eui2=v1%3AAeEKRfzodpHc-2LGzJeJslL3ivMgJ3qR40KFOpiCkxsziCMVv03I2rzPUXbhJCvPkgbMTxkCbsYluxA8JcSdG11OjmB97Bxv2BPeBayBv-w21A&oh=d558544fe2b3e6633eedded9c4cb0d02&oe=5B5FC3B5'}}
           />
         </View>
         <View style={styles.editForm_container}>

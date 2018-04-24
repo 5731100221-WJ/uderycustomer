@@ -9,7 +9,7 @@ export default class Favorite extends React.Component {
     this.state = {
       selected1: 'key0',
 
-      list: [{ id: 0, name: 'ส้ม', rate: 4.9, DoneOrder: 25 }, { id: 1, name: 'ก๋วยเตี๋ยว', rate: 4.9, DoneOrder: 25 }, { id: 2, name: 'ตามสั่ง', rate: 4.9, DoneOrder: 25 }, { id: 3, name: 'ส้มตำ', rate: 4.9, DoneOrder: 25 }, { id: 4, name: 'ส้ม', rate: 4.9, DoneOrder: 25 }, { id: 5, name: 'ส้ม', rate: 4.9, DoneOrder: 25 }, { id: 6, name: 'ส้ม', rate: 4.9, DoneOrder: 25 }]
+      list: [{ id: 0, name: 'ส้ม', rate: 4.9, picture: 'https://f.ptcdn.info/245/041/000/o4lu0paryQPlo8ncV0K-o.jpg', DoneOrder: 25 }]
     };
   }
   render() {
@@ -32,7 +32,7 @@ export default class Favorite extends React.Component {
                 <Card style={{ height: 150, margin: 20, flex: 1, flexDirection: 'row' }} key={index}>
                   <Image
                       style={{ width: 170, height: 150 }}
-                      source={require('@img/2.jpg')}
+                      source={{ uri: item.picture }}
                   />
                   <View style={{ flex: 1, flexDirection: 'column' }}>
                     <View style={{ flex: 3, flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -40,7 +40,7 @@ export default class Favorite extends React.Component {
                         <Text style={{ fontSize: 25 }}>{item.name}</Text>
                       </View>
                       <Button vertical active transparent style={{ margin: 15 }} >
-                        <Icon active name='star' onPress={() => { Actions.storeList(); }} />
+                        <Icon active name='heart' onPress={() => { Actions.storeList(); }} />
                       </Button>
                     </View>
                     <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-between' }}>

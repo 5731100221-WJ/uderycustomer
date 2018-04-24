@@ -99,21 +99,25 @@ export default class Store extends React.Component {
             <Button transparent onPress={() => this.props.navigation.goBack()}>
                 <Icon name="arrow-back" />
             </Button>
-            <View style={{ margin: 20 }}>
+            <View style={{ margin: 15 }}>
               <Text style={textName}>ร้าน{store.name}</Text>
               <Text style={textDetail}>{store.description} </Text>
+              <Text style={{marginTop: 5}}>{store.rate}</Text>
+              <Button block  style={{ height: 20, width: 40, marginTop: 5, backgroundColor: '#F7CA61' }} onPress={() => { Actions.review(); }}>
+                <Text  style={textTime}>Review</Text>
+              </Button>
               {/* <Button block style={{ height: 20, width: 35, margin: 8, backgroundColor: (this.state.isOpen ? '#1EBE3E' : '#fff') }}>
                 <Text>{ this.state.isOpen ? 'เปิด' : 'ปิด' }</Text>
               </Button>
               <Text style={textTime}>เวลาที่เปิดให้บริการ</Text>
               <Text style={textTime}>{store.timeOpen}-{store.timeClose}</Text> */}
             </View>
-            <Icon name="star" style={{ marginTop: 15}} />
+            <Icon name="heart" style={{ marginTop: 15}} />
           </ImageBackground>
           <View style={styles.userReviewView}>
             <Image
               style={styles.userImage}
-              source={{ uri: 'https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-1/p240x240/26169860_1977972945806737_8198830292735689267_n.jpg?oh=192bca2eaa2e016ae5a2c0fabc71dffa&oe=5B0EC2DC' }}
+              source={{ uri: 'https://scontent.fbkk1-2.fna.fbcdn.net/v/t1.0-9/29541815_2017223515215013_2350939371380057927_n.jpg?_nc_fx=fbkk1-1&_nc_cat=0&_nc_eui2=v1%3AAeEKRfzodpHc-2LGzJeJslL3ivMgJ3qR40KFOpiCkxsziCMVv03I2rzPUXbhJCvPkgbMTxkCbsYluxA8JcSdG11OjmB97Bxv2BPeBayBv-w21A&oh=d558544fe2b3e6633eedded9c4cb0d02&oe=5B5FC3B5' }}
             />
             <View style={rateView}>
               <Icon name='star' />
@@ -125,7 +129,7 @@ export default class Store extends React.Component {
           </View>
           <View style={menuView}>
             {this.state.storeMenu.map((menu, index) => (
-              <Button full light style={menuBox} key={index} onPress={() => { Actions.menuDetails({ id: this.state.id ,menuID: menu.id ,menuName:menu.name}); }}>
+              <Button full light style={menuBox} key={index} onPress={() => { Actions.menuDetails({ id: this.state.id, menuID: menu.id, menuName: menu.name }); }}>
                 <Text>{menu.name}</Text>
                 <Text>{menu.price}</Text>
               </Button>
@@ -155,7 +159,7 @@ const styles = {
   },
   textTime: {
     fontSize: 12,
-    color: 'white'
+    color: 'black'
   },
   userImage: {
     borderColor: '#F0F0F0',
@@ -168,7 +172,7 @@ const styles = {
     flex: 1,
     flexDirection: 'row',
     marginTop: 25,
-    marginLeft:20,
+    marginLeft: 20,
     height: 50,
   },
   userReviewView: {

@@ -26,32 +26,36 @@ export default class Login extends Component {
   _userlogin () {
     // console.log('test', this.state)
     // this.state.Username && this.state.Password
-    fetch('http://35.185.182.152:3000/api/registerCustommers/login', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: this.state.UserName,
-        password: this.state.Password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        this.setState({ user: response });
-        this.setState({ usertoken: response.id });
-        if (response.error) this.setState({ message: response.message });
-        else this.state.proceed = true;
+    if (1){
+      fetch('http://35.185.182.152:3000/api/registerCustommers/login', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: this.state.UserName,
+          password: this.state.Password,
+        }),
       })
-      .then(() => {
-        this.setState({ isLoggingIn: false });
-        if (this.state.proceed) {
-          console.log('test2', this.state);
-          Actions.storeList({ user: this.state.user, usertoken: this.state.usertoken });
-         }
-      });
+        .then((response) => response.json())
+        .then((response) => {
+          this.setState({ user: response });
+          this.setState({ usertoken: response.id });
+          if (response.error) this.setState({ message: response.message});
+          else this.state.proceed = true;
+        })
+        .then(() => {
+          this.setState({ isLoggingIn: false})
+          if (this.state.proceed) {
+            Actions.StoreList({ user: this.state.user, usertoken: this.state.usertoken });
+           }
+        })
+
+
     }
+
+  }
 
     render() {
         return (

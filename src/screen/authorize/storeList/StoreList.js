@@ -92,7 +92,7 @@ export default class StoreList extends React.Component {
 
 const styles = {
   textList: {
-    fontSize: 15
+    fontSize: 20
   },
   searchInput: {
     padding: 10,
