@@ -9,8 +9,9 @@ export default class Store extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: props.userId,
+      usertoken: props.usertoken,
       id: props.id || 1,
-      userId: props.userID || 1,
       IsFavorite: false,
       isOpen: false,
       store: {},
@@ -33,6 +34,7 @@ export default class Store extends React.Component {
     // this.isThisOpenNow();
     this.getStoreDetail();
     this.getStoreMenu();
+    this.getUserDetails();
   }
 
   getStoreDetail() {
@@ -68,7 +70,7 @@ export default class Store extends React.Component {
       })
   }
   getUserDetails(){
-    fetch('http://10.202.199.150:300/user' + this.state.userId)
+    fetch('http://35.185.182.152:3000/api/registerCustommers/' + this.state.userId)
       .then((response) => response.json())
       .then((response) => {
         this.setState({ user: response });
@@ -91,7 +93,7 @@ export default class Store extends React.Component {
 
   render() {
     const { container, textName, textDetail, textTime, userImageView, menuBox, menuView, rateView} = styles;
-    const { store } = this.state;
+    const { store, user } = this.state;
     return (
       <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start' }}>
         <ScrollView>
@@ -102,8 +104,11 @@ export default class Store extends React.Component {
             <View style={{ margin: 15 }}>
               <Text style={textName}>ร้าน{store.name}</Text>
               <Text style={textDetail}>{store.description} </Text>
-              <Text style={{marginTop: 5}}>{store.rate}</Text>
-              <Button block  style={{ height: 20, width: 40, marginTop: 5, backgroundColor: '#F7CA61' }} onPress={() => { Actions.review(); }}>
+              <View style={{flex: 1, flexDirection: 'row', height: 30 }}>
+                <Text style={{marginTop: 5}}>{store.rate}</Text>
+                <Icon name='star' style={{fontSize: 20, margin:4 ,marginTop:6}} />
+              </View>
+              <Button block  style={{ height: 20, width: 40, marginTop: 5, backgroundColor: '#F7CA61' }} onPress={() => { Actions.review({ userId: this.state.userId, usertoken: this.state.usertoken, storeId: this.state.id}); }}>
                 <Text  style={textTime}>Review</Text>
               </Button>
               {/* <Button block style={{ height: 20, width: 35, margin: 8, backgroundColor: (this.state.isOpen ? '#1EBE3E' : '#fff') }}>
@@ -112,11 +117,12 @@ export default class Store extends React.Component {
               <Text style={textTime}>เวลาที่เปิดให้บริการ</Text>
               <Text style={textTime}>{store.timeOpen}-{store.timeClose}</Text> */}
             </View>
-            <Icon name="heart" style={{ marginTop: 15}} />
+            <Icon name="heart" style={{ marginTop: 23}} />
           </ImageBackground>
           <View style={styles.userReviewView}>
             <Image
               style={styles.userImage}
+              // source={{ uri: user.picture }}
               source={{ uri: 'https://scontent.fbkk1-2.fna.fbcdn.net/v/t1.0-9/29541815_2017223515215013_2350939371380057927_n.jpg?_nc_fx=fbkk1-1&_nc_cat=0&_nc_eui2=v1%3AAeEKRfzodpHc-2LGzJeJslL3ivMgJ3qR40KFOpiCkxsziCMVv03I2rzPUXbhJCvPkgbMTxkCbsYluxA8JcSdG11OjmB97Bxv2BPeBayBv-w21A&oh=d558544fe2b3e6633eedded9c4cb0d02&oe=5B5FC3B5' }}
             />
             <View style={rateView}>
@@ -129,7 +135,7 @@ export default class Store extends React.Component {
           </View>
           <View style={menuView}>
             {this.state.storeMenu.map((menu, index) => (
-              <Button full light style={menuBox} key={index} onPress={() => { Actions.menuDetails({ id: this.state.id, menuID: menu.id, menuName: menu.name }); }}>
+              <Button full light style={menuBox} key={index} onPress={() => { Actions.menuDetails({ id: this.state.id, menuID: menu.id, menuName: menu.name, userId: this.state.userId, user: this.state.user, usertoken: this.state.usertoken }); }}>
                 <Text>{menu.name}</Text>
                 <Text>{menu.price}</Text>
               </Button>

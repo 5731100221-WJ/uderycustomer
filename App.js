@@ -28,14 +28,13 @@ export default class App extends Component<Props> {
     return (
       <Router >
         <Scene hideNavBar={true} key="root">
-          <Scene key="register" component={Register} title="Register" />
           <Scene key="login" component={Login} title="Login" />
-          {/* <Scene key="loginScreen" component={LoginScreen} title="LoginScreen" /> */}
           <Scene key="storeList" component={StoreList} title="StoreList" />
+          <Scene key="menuDetails" component={MenuDetails} title="MenuDetails" />
+          <Scene key="register" component={Register} title="Register" />
+          <Scene key="store" component={Store} title="Store" />
           <Scene key="review" component={Review} title="Review" />
           <Scene key="orderList" component={OrderList} title="OrderList" />
-          <Scene key="store" component={Store} title="Store" />
-          <Scene key="menuDetails" component={MenuDetails} title="MenuDetails" />
           <Scene key="profile" component={Profile} title="Profile" />
           <Scene key="favorite" component={Favorite} title="Favorite" />
 

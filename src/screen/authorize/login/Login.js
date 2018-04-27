@@ -13,8 +13,8 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      UserName: '',
-      Password: '',
+      UserName: 't1',
+      Password: 't1',
       isLoggingIn: false,
       message: '',
       user: {},
@@ -48,7 +48,7 @@ export default class Login extends Component {
         this.setState({ isLoggingIn: false });
         if (this.state.proceed) {
           console.log('test2', this.state);
-          Actions.storeList({ user: this.state.user, usertoken: this.state.usertoken });
+          Actions.storeList({ usertoken: this.state.usertoken, userId: this.state.user.userId });
          }
       });
     }
@@ -64,7 +64,7 @@ export default class Login extends Component {
                     style={{ fontSize: 27 }}>
                     Login
                 </Text>
-                <TextInput placeholder='Username' value={this.state.UserName} onChangeText={(text) => this.setState({ UserName: text })} />
+                <TextInput placeholder='Username or Email' value={this.state.UserName} onChangeText={(text) => this.setState({ UserName: text })} />
                 <TextInput placeholder='Password' secureTextEntry value={this.state.Password} onChangeText={(text) => this.setState({ Password: text })} />
                 <View style={{ margin: 7 }} />
                 <Button

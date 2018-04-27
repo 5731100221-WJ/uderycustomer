@@ -2,15 +2,37 @@ import React from 'react';
 import { Text, View, Image, ScrollView } from 'react-native';
 import { Container, Icon, Header, Title, Card, Button, Body, Right, Left } from 'native-base';
 import FooterTabs from '@footerTabs/FooterTabs.js';
+import Favo from './Favo';
 
 export default class Favorite extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selected1: 'key0',
-
-      list: [{ id: 0, name: 'ส้ม', rate: 4.9, picture: 'https://f.ptcdn.info/245/041/000/o4lu0paryQPlo8ncV0K-o.jpg', DoneOrder: 25 }]
+      userId: props.userId,
+      usertoken: props.usertoken,
+      list: []
+      // list: [{ id: 0, name: 'ส้ม', rate: 4.9, picture: 'https://f.ptcdn.info/245/041/000/o4lu0paryQPlo8ncV0K-o.jpg', DoneOrder: 25 }]
     };
+  }
+  componentDidMount() {
+    this.getFavorite();
+  }
+  getFavorite() {
+    fetch('http://35.185.182.152:3000/api/stores')
+      .then((response) => response.json())
+      .then((response) => {
+        console.log('test5555', response)
+        this.setState({ list: response });
+      })
+      .catch(() => {
+        // this.setState({ list: { name: 'ส้ม', description: 'จานด่วน', picture:'https://food.mthai.com/app/uploads/2014/03/792167141-1.jpg', id: '5ac7c683322d2c02cf0f3587' } });
+      })
+  }
+  renderFavo() {
+    return this.state.list.map((item, index) => (
+        <Favo key={item.id} item={item} userId={this.state.userId} usertoken={this.state.usertoken} />
+      ))
   }
   render() {
     return (
@@ -27,39 +49,9 @@ export default class Favorite extends React.Component {
           <Right />
         </Header>
         <ScrollView>
-          <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}>
-            {this.state.list.map((item, index) => (
-                <Card style={{ height: 150, margin: 20, flex: 1, flexDirection: 'row' }} key={index}>
-                  <Image
-                      style={{ width: 170, height: 150 }}
-                      source={{ uri: item.picture }}
-                  />
-                  <View style={{ flex: 1, flexDirection: 'column' }}>
-                    <View style={{ flex: 3, flexDirection: 'row', justifyContent: 'space-between' }}>
-                      <View style={{ margin: 15 }}>
-                        <Text style={{ fontSize: 25 }}>{item.name}</Text>
-                      </View>
-                      <Button vertical active transparent style={{ margin: 15 }} >
-                        <Icon active name='heart' onPress={() => { Actions.storeList(); }} />
-                      </Button>
-                    </View>
-                    <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-between' }}>
-                      <View style={{ flex: 0.7, marginTop: 15, marginLeft: 15 }}>
-                        <Text style={{ fontSize: 17 }}>{item.rate}</Text>
-                      </View>
-                      <View style={{ flex: 1, width: 5, marginTop: 18, marginLeft: 3 }} >
-                        <Icon active name="star" style={{ fontSize: 15 }} />
-                      </View>
-                      <View style={{ flex: 3, marginLeft: 10, marginTop: 15}}>
-                        <Text style={{ fontSize: 15 }}>สั่งไปแล้ว {item.DoneOrder} Order</Text>
-                      </View>
-                    </View>
-                  </View>
-                </Card>
-              ))}
-          </View>
+          {this.renderFavo()}
         </ScrollView>
-        <FooterTabs />
+        <FooterTabs userId={this.state.userId} usertoken={this.state.usertoken}/>
       </Container>
     );
   }

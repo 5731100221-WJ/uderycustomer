@@ -9,29 +9,23 @@ export default class MenuDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: props.user,
-      usertoken: props.usertoken,
       id: props.id,
       menuID: props.menuID,
-      userId: props.userId,
+      userId: props.userID || 1,
       IsFavorite: false,
       isOpen: false,
+      user: {},
       toppingPrice: 0,
       toppingType: [],
       menu: {},
       selectedItems: [],
-      toppingName: '',
-      sumprice: '0',
-      date1: '',
-      month: '',
-      year: '',
+      toppingName: ''
     };
   }
 
   componentDidMount() {
     this.getStoreTopping();
     this.getStoreMenu();
-    this.getDate();
   }
 
   getStoreTopping() {
@@ -118,20 +112,14 @@ export default class MenuDetails extends React.Component {
   }
   allTopping() {
     let nameTopping = '';
-    const { toppingType } = this.state;
     this.state.selectedItems.map((id, index) => {
       const itemIndex = findIndex(toppingType, { id });
       nameTopping += toppingType[itemIndex].name;
     });
     return nameTopping;
   }
-  getDate() {
-      this.state.date1 = new Date().getDate();
-      this.state.month = new Date().getMonth() + 1;
-      this.state.year = new Date().getFullYear();
-  }
   sendMenu() {
-    const {  id, menu, userId, date1, month, year } = this.state;
+    this.state.toppingName = this.allTopping();
     fetch('http://35.185.182.152:3000/api/menucombinationitems', {
       method: 'POST',
       headers: {
@@ -139,15 +127,11 @@ export default class MenuDetails extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: menu.name + this.allTopping(),
-        storeId: id,
-        registerCustommerId: userId,
-        menuitemId: menu.id,
-        price: this.sumItemPrice() + menu.price,
-        date: date1 + '-' + month + '-' + year
+        name: this.state.menu.name + this.state.toppingName,
+
       }),
     });
-    Actions.orderList({ storeId: id, userID: userId, usertoken: this.state.usertoken });
+    Actions.orderList({});
   }
 
   render() {

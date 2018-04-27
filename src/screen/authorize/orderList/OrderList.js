@@ -6,6 +6,13 @@ import NowOrder from './NowOrder';
 import FooterTabs from '@footerTabs/FooterTabs.js';
 
 export default class OrderList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userId: props.userId,
+      usertoken: props.usertoken,
+    };
+  }
   render() {
     return (
       <Container>
@@ -28,7 +35,7 @@ export default class OrderList extends Component {
             <PastOrder />
           </Tab>
         </Tabs>
-      <FooterTabs />
+      <FooterTabs userId={this.state.userId} usertoken={this.state.usertoken}/>
       </Container>
     );
   }
