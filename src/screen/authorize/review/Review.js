@@ -18,12 +18,14 @@ export default class Review extends Component {
       year: '',
       reviewText: '',
       rate:0,
+      store: {}
     };
   }
   componentDidMount() {
     this.getDate();
     this.getUserDetails();
     this.getReview();
+    this.getStoreDetail();
   }
   getDate() {
       this.state.date1 = new Date().getDate();
@@ -68,7 +70,29 @@ export default class Review extends Component {
         registerCustommerId: this.state.userId
       }),
     });
-    Actions.review({ userId: this.state.userId, usertoken: this.state.usertoken, storeId: this.state.id });
+    this.getReview();
+    fetch('http://35.185.182.152:3000/api/stores/' + this.state.storeId, {
+      method: 'PATCH',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        rate: (this.state.store.rate + this.state.rate)/2
+      }),
+    });
+    // Actions.refresh({ key: Math.random(), userId: this.state.userId, usertoken: this.state.usertoken, storeId: this.state.id });
+  }
+  getStoreDetail() {
+    fetch('http://35.185.182.152:3000/api/stores/'+ this.state.storeId)
+      .then((response) => response.json())
+      .then((response) => {
+        console.log('test', response)
+        this.setState({ store: response });
+      })
+      .catch(() => {
+        this.setState({ store: { name: 'ส้มaa', description: 'จานด่วน', picture:'https://food.mthai.com/app/uploads/2014/03/792167141-1.jpg', id: '5ac7c683322d2c02cf0f3587' } });
+      })
   }
   render() {
     console.log('test33', this.state)
@@ -89,7 +113,7 @@ export default class Review extends Component {
         </Header>
         <ScrollView >
           <View style={reviewView}>
-            {this.state.reviewList.map((item, index) => (
+            {Array.isArray(this.state.reviewList) && this.state.reviewList.map((item, index) => (
               <Card transparent style={cardSty}>
                 <CardItem cardBody>
                   <Text style={{ fontSize: 20, marginTop: 10, marginLeft: 15 }}>
@@ -104,6 +128,7 @@ export default class Review extends Component {
               </Card>
             ))}
           </View>
+        </ScrollView>
         <CardItem bordered>
           <Left>
           <Thumbnail source={{uri: 'https://scontent.fbkk1-2.fna.fbcdn.net/v/t1.0-9/29541815_2017223515215013_2350939371380057927_n.jpg?_nc_fx=fbkk1-1&_nc_cat=0&_nc_eui2=v1%3AAeEKRfzodpHc-2LGzJeJslL3ivMgJ3qR40KFOpiCkxsziCMVv03I2rzPUXbhJCvPkgbMTxkCbsYluxA8JcSdG11OjmB97Bxv2BPeBayBv-w21A&oh=d558544fe2b3e6633eedded9c4cb0d02&oe=5B5FC3B5'}} />
@@ -128,7 +153,6 @@ export default class Review extends Component {
         <Button full onPress={() => {this.sendReview()}}>
           <Text style={{color:'#FFF'}}>Send</Text>
         </Button>
-      </ScrollView>
 
       </View>
     );
@@ -139,7 +163,7 @@ const styles = {
     height: 360,
   },
   cardSty: {
-    height: 50,
+    height: 30,
   },
   inputView: {
     marginTop: 5,

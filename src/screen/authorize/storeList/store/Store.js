@@ -90,7 +90,18 @@ export default class Store extends React.Component {
   //       this.setState({ isOpen: false });
   //     })
   // }
-
+  toggleFavo() {
+    fetch('http://35.185.182.152:3000/api/stores/' + this.state.id, {
+      method: 'PATCH',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        isFavo: !this.state.store.isFavo
+      }),
+    });
+  }
   render() {
     const { container, textName, textDetail, textTime, userImageView, menuBox, menuView, rateView} = styles;
     const { store, user } = this.state;
@@ -117,7 +128,9 @@ export default class Store extends React.Component {
               <Text style={textTime}>เวลาที่เปิดให้บริการ</Text>
               <Text style={textTime}>{store.timeOpen}-{store.timeClose}</Text> */}
             </View>
-            <Icon name="heart" style={{ marginTop: 23}} />
+            <Button vertical active transparent style={{ margin: 15 }} onPress={() => { this.toggleFavo(); }}>
+              <Icon style={{fontSize: 25}} active name='heart' />
+            </Button>
           </ImageBackground>
           <View style={styles.userReviewView}>
             <Image

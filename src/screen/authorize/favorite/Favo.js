@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, Image, ScrollView } from 'react-native';
+import { Text, View, Image, ScrollView, TouchableHighlight } from 'react-native';
 import { Card, Button  } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
@@ -16,21 +16,30 @@ export default class Favo extends Component {
   }
   toggleFavo() {
     const { item } = this.state;
-    item.isFavo = !item.isFavo;
-    Actions.storeList({ usertoken: this.state.usertoken, userId: this.state.user.userId });
+    fetch('http://35.185.182.152:3000/api/stores/' + item.id, {
+      method: 'PATCH',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        isFavo: !item.isFavo
+      }),
+    });
+    Actions.storeList({ usertoken: this.state.usertoken, userId: this.state.userId });
   }
   render() {
     const { item } = this.state;
-    console.log('777775',this.state);
     if (item.isFavo === true){
-      console.log('12345');
       return (
         <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}>
           <Card style={{ height: 150, margin: 20, flex: 1, flexDirection: 'row' }} >
-            <Image
-                style={{ width: 170, height: 150 }}
-                source={{ uri: item.picture }}
-            />
+            <TouchableHighlight onPress={() => Actions.store({ id: item.id, userId: this.state.userId, usertoken: this.state.usertoken} )}>
+              <Image
+                  style={{ width: 170, height: 150 }}
+                  source={{ uri: item.picture }}
+              />
+            </TouchableHighlight>
             <View style={{ flex: 1, flexDirection: 'column' }}>
               <View style={{ flex: 3, flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View style={{ margin: 15 }}>

@@ -22,7 +22,6 @@ export default class Favorite extends React.Component {
     fetch('http://35.185.182.152:3000/api/stores')
       .then((response) => response.json())
       .then((response) => {
-        console.log('test5555', response)
         this.setState({ list: response });
       })
       .catch(() => {

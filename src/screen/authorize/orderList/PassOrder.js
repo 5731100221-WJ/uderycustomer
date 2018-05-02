@@ -90,9 +90,9 @@ export default class PassOrder extends Component {
               </View>
             </View>
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View style={{ margin: 15 }}>
+              {/* <View style={{ margin: 15 }}>
                 <Text style={{ fontSize: 15 }}>{item.name}</Text>
-              </View>
+              </View> */}
               <View  style={{ margin: 8 }}>
                 <Button block style={{backgroundColor:'yellow'}} onPress={() => { Actions.review({ userId: this.state.userId, usertoken: this.state.usertoken, storeId: this.state.id}); }}>
                   <Text>Review</Text>
